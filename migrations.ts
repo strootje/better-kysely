@@ -1,7 +1,7 @@
 import { lessOrEqual, lessThan, parse } from "@std/semver";
 import type { Migration } from "kysely";
 
-type MigraitonList = Record<string, Migration & { version: string }>;
+export type MigraitonList = Record<string, Migration & { version: string }>;
 type Migrations<TVersion extends string> = Record<string, Migration & { version: TVersion }>;
 type Modules<TVersion extends string, TModules extends string> = Record<TModules, Migrations<TVersion>> & {
   core: Migrations<TVersion>;
