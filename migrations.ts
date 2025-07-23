@@ -11,10 +11,15 @@ export const build = <TVersion extends string, TModules extends string>(
   modules: Modules<TVersion, TModules>,
 ): (...plugins: Array<keyof Omit<typeof modules, "core">>) => MigraitonList => {
   return (...plugins: Array<keyof Omit<typeof modules, "core">>) => {
-    return plugins.reduce(
+    const migrations = plugins.reduce(
       (prev, cur) => ({ ...prev, ...(modules[cur as keyof Omit<typeof modules, "core">]) }),
       modules["core"],
     );
+
+    return keyval(migrations)
+      .map(({ key, value }) => ({ key, value: { ...value, semver: parse(value.version) } }))
+      .toSorted(({ value: { semver: a } }, { value: { semver: b } }) => lessThan(a, b) ? -1 : 1)
+      .reduce((prev, { key, value }) => ({ ...prev, [key]: value }), {});
   };
 };
 
@@ -24,8 +29,6 @@ const keyval = <TKey extends string, TVal>(obj: Record<TKey, TVal>) => {
 
 export const countup = (migrations: MigraitonList, counter: number = 0): MigraitonList => {
   return keyval(migrations)
-    .map(({ key, value }) => ({ key, value: { ...value, semver: parse(value.version) } }))
-    .toSorted(({ value: { semver: a } }, { value: { semver: b } }) => lessThan(a, b) ? -1 : 1)
     .reduce((prev, { key, value }) => ({ ...prev, [`${String(++counter).padStart(5, "0")}__${key}`]: value }), {});
 };
 
