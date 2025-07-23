@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { buildMigrations } from "./mod.ts";
+import * as util from "./migrations.ts";
 
 Deno.test("buildMigrations", async ({ step }) => {
   const migrations = {
@@ -14,33 +14,33 @@ Deno.test("buildMigrations", async ({ step }) => {
   } as const;
 
   await step("single.entry", () => {
-    const result = buildMigrations(({ upto }) => ({
-      ...upto(migrations, "1.0.0"),
+    const result = util.countup(util.dedupe({
+      ...util.pin(migrations, "1.0.0"),
     }));
     expect(Object.keys(result)).toHaveLength(1);
   });
 
-  await step("double.entry.with.and.without.upto", () => {
-    const result = buildMigrations(({ upto }) => ({
-      ...upto(migrations, "1.0.0"),
+  await step("double.entry.with.and.without.pin", () => {
+    const result = util.countup(util.dedupe({
+      ...util.pin(migrations, "1.0.0"),
       ...{ mycustommigration: { async up() {} } },
     }));
     expect(Object.keys(result)).toHaveLength(2);
   });
 
-  await step("double.entry.with.merge.upto", () => {
-    const result = buildMigrations(({ upto }) => ({
-      ...upto(migrations, "1.0.0"),
-      ...upto(migrations, "1.2.0"),
+  await step("double.entry.with.merge.pin", () => {
+    const result = util.countup(util.dedupe({
+      ...util.pin(migrations, "1.0.0"),
+      ...util.pin(migrations, "1.2.0"),
     }));
     expect(Object.keys(result)).toHaveLength(2);
   });
 
-  await step("double.entry.with.and.without.upto", () => {
-    const result = buildMigrations(({ upto }) => ({
-      ...upto(migrations, "1.0.0"),
+  await step("double.entry.with.and.without.pin", () => {
+    const result = util.countup(util.dedupe({
+      ...util.pin(migrations, "1.0.0"),
       ...{ mycustommigration: { async up() {} } },
-      ...upto(migrations, "1.2.0"),
+      ...util.pin(migrations, "1.2.0"),
     }));
     expect(Object.keys(result)).toHaveLength(3);
   });
