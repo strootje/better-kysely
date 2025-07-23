@@ -1,8 +1,15 @@
-import { type Dialect, Kysely, type Migration, Migrator } from "kysely";
+import { type Dialect, Kysely, type Migration, type MigrationResult, Migrator } from "kysely";
+
+type DatabaseApi<T> = {
+  useDatabase: () => Kysely<T>;
+  useMigrator: () => Migrator;
+  migrateToLatest: () => Promise<MigrationResult[] | undefined>;
+};
 
 type MigrationsFn = () => Promise<Record<string, Migration>>;
-export const makeDatabase = <T>(dialect: Dialect, getMigrations: MigrationsFn) => {
+export const makeDatabase = <T>(dialect: Dialect, getMigrations: MigrationsFn): DatabaseApi<T> => {
   let kysely: Kysely<T>;
+
   const api = {
     useDatabase: () => {
       return kysely ??= new Kysely<T>({
@@ -24,5 +31,6 @@ export const makeDatabase = <T>(dialect: Dialect, getMigrations: MigrationsFn) =
       return results;
     },
   };
+
   return api;
 };
