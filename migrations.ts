@@ -8,10 +8,13 @@ type Modules<TVersion extends string, TModules extends string> = Record<TModules
 };
 
 export const build = <TVersion extends string, TModules extends string>(
-  { core, ...modules }: Modules<TVersion, TModules>,
-): (...plugins: Array<keyof typeof modules>) => MigraitonList => {
-  return (...plugins: Array<keyof typeof modules>) => {
-    return plugins.reduce((prev, cur) => ({ ...prev, ...(modules[cur as keyof typeof modules]) }), core);
+  modules: Modules<TVersion, TModules>,
+): (...plugins: Array<keyof Omit<typeof modules, "core">>) => MigraitonList => {
+  return (...plugins: Array<keyof Omit<typeof modules, "core">>) => {
+    return plugins.reduce(
+      (prev, cur) => ({ ...prev, ...(modules[cur as keyof Omit<typeof modules, "core">]) }),
+      modules["core"],
+    );
   };
 };
 
