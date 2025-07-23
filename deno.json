@@ -1,9 +1,12 @@
 {
   "name": "@strootje/better-kysely",
   "exports": "./mod.ts",
+  "version": "0.1.0",
+
   "imports": {
     "kysely": "npm:kysely@^0.27.6"
   },
+
   "fmt": {
     "lineWidth": 120
   }
