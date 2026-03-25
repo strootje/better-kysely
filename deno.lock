@@ -1,43 +1,51 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@std/assert@^1.0.14": "1.0.14",
-    "jsr:@std/expect@^1.0.17": "1.0.17",
-    "jsr:@std/internal@^1.0.10": "1.0.10",
-    "jsr:@std/semver@^1.0.7": "1.0.7",
-    "npm:kysely@~0.28.9": "0.28.9"
+    "jsr:@std/assert@^1.0.19": "1.0.19",
+    "jsr:@std/expect@^1.0.18": "1.0.18",
+    "jsr:@std/internal@^1.0.12": "1.0.12",
+    "jsr:@std/path@^1.1.4": "1.1.4",
+    "jsr:@std/semver@^1.0.8": "1.0.8",
+    "npm:kysely@~0.28.14": "0.28.14"
   },
   "jsr": {
-    "@std/assert@1.0.14": {
-      "integrity": "68d0d4a43b365abc927f45a9b85c639ea18a9fab96ad92281e493e4ed84abaa4",
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
       "dependencies": [
         "jsr:@std/internal"
       ]
     },
-    "@std/expect@1.0.17": {
-      "integrity": "316b47dd65c33e3151344eb3267bf42efba17d1415425f07ed96185d67fc04d9",
+    "@std/expect@1.0.18": {
+      "integrity": "8566eab35200466f8609eb7e7aed062ed0db314e9a258d5d201b1b8997ce801a",
       "dependencies": [
         "jsr:@std/assert",
+        "jsr:@std/internal",
+        "jsr:@std/path"
+      ]
+    },
+    "@std/internal@1.0.12": {
+      "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
+    },
+    "@std/path@1.1.4": {
+      "integrity": "1d2d43f39efb1b42f0b1882a25486647cb851481862dc7313390b2bb044314b5",
+      "dependencies": [
         "jsr:@std/internal"
       ]
     },
-    "@std/internal@1.0.10": {
-      "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
-    },
-    "@std/semver@1.0.7": {
-      "integrity": "7d5f65391762dc4358abde80fc3354086ddb40101f140295e60f290c138887d0"
+    "@std/semver@1.0.8": {
+      "integrity": "dc830e8b8b6a380c895d53fbfd1258dc253704ca57bbe1629ac65fd7830179b7"
     }
   },
   "npm": {
-    "kysely@0.28.9": {
-      "integrity": "sha512-3BeXMoiOhpOwu62CiVpO6lxfq4eS6KMYfQdMsN/2kUCRNuF2YiEr7u0HLHaQU+O4Xu8YXE3bHVkwaQ85i72EuA=="
+    "kysely@0.28.14": {
+      "integrity": "sha512-SU3lgh0rPvq7upc6vvdVrCsSMUG1h3ChvHVOY7wJ2fw4C9QEB7X3d5eyYEyULUX7UQtxZJtZXGuT6U2US72UYA=="
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/expect@^1.0.17",
-      "jsr:@std/semver@^1.0.7",
-      "npm:kysely@~0.28.9"
+      "jsr:@std/expect@^1.0.18",
+      "jsr:@std/semver@^1.0.8",
+      "npm:kysely@~0.28.14"
     ]
   }
 }
