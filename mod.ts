@@ -7,6 +7,26 @@ type DatabaseApi<T> = {
 };
 
 type MigrationsFn = () => Promise<Record<string, Migration>>;
+/**
+ * Builds a database
+ *
+ * @example
+ * ```ts
+ * import { makeDatabase } from '@strootje/better-kysely';
+ *
+ * const getDialect = () => {
+ *   return dialect ??= ....
+ * }
+ *
+ * export const serverDb = makeDatabase(getDialect(), () => Promise.resolve({
+ *   m001_myMigration
+ * }))
+ * ```
+ *
+ * @param dialect Dialect to use
+ * @param getMigrations Migration strategy
+ * @returns @see DatabaseApi
+ */
 export const makeDatabase = <T>(dialect: Dialect, getMigrations: MigrationsFn): DatabaseApi<T> => {
   let kysely: Kysely<T>;
 
